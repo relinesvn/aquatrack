@@ -1,34 +1,47 @@
-function Header({ filter, onFilterToggle, page, onPageChange }) {
+import { NavLink } from 'react-router-dom';
+
+function Header({ filter, onFilterToggle }) {
   return (
     <header className="header">
       <div className="header__inner">
-        <span className="header__logo">💧 AquaTrack</span>
+        <NavLink to="/" className="header__logo">
+          💧 AquaTrack
+        </NavLink>
 
         <nav className="header__nav">
-          <button
-            className={`nav-btn ${page === 'drinks' ? 'nav-btn--active' : ''}`}
-            onClick={() => onPageChange('drinks')}
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) => `nav-btn ${isActive ? 'nav-btn--active' : ''}`}
+          >
+            🏠 Головна
+          </NavLink>
+          <NavLink
+            to="/drinks"
+            className={({ isActive }) => `nav-btn ${isActive ? 'nav-btn--active' : ''}`}
           >
             🥤 Напої
-          </button>
-          <button
-            className={`nav-btn ${page === 'stats' ? 'nav-btn--active' : ''}`}
-            onClick={() => onPageChange('stats')}
+          </NavLink>
+          <NavLink
+            to="/stats"
+            className={({ isActive }) => `nav-btn ${isActive ? 'nav-btn--active' : ''}`}
           >
             📊 Статистика
-          </button>
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) => `nav-btn ${isActive ? 'nav-btn--active' : ''}`}
+          >
+            ℹ️ Про нас
+          </NavLink>
         </nav>
 
-        <div className="header__right">
-          {page === 'drinks' && (
-            <button
-              className={`filter-btn ${filter === 'liked' ? 'active' : ''}`}
-              onClick={onFilterToggle}
-            >
-              {filter === 'liked' ? '❤️ Усі напої' : '🤍 Улюблені'}
-            </button>
-          )}
-        </div>
+        <button
+          className={`filter-btn ${filter === 'liked' ? 'active' : ''}`}
+          onClick={onFilterToggle}
+        >
+          {filter === 'liked' ? '❤️ Усі напої' : '🤍 Улюблені'}
+        </button>
       </div>
     </header>
   );

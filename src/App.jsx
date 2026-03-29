@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Main from './components/Main';
-import Stats from './components/Stats';
+import Home   from './pages/Home';
+import Drinks from './pages/Drinks';
+import Stats  from './pages/Stats';
+import About  from './pages/About';
 import './App.css';
 
 const initialDrinks = [
@@ -27,9 +30,8 @@ function App() {
     } catch { return new Set(); }
   });
 
-  const [filter, setFilter]   = useState('all');
-  const [page, setPage]       = useState('drinks'); // 'drinks' | 'stats'
-  const [editDrink, setEditDrink] = useState(null); // напій для редагування
+  const [filter, setFilter]       = useState('all');
+  const [editDrink, setEditDrink] = useState(null);
 
   useEffect(() => {
     localStorage.setItem('aquatrack_drinks', JSON.stringify(drinks));
@@ -65,32 +67,34 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <Header
-        filter={filter}
-        onFilterToggle={toggleFilter}
-        page={page}
-        onPageChange={setPage}
-      />
+    <BrowserRouter>
+      <div className="app">
+        <Header filter={filter} onFilterToggle={toggleFilter} />
 
-      {page === 'drinks' ? (
-        <Main
-          drinks={drinks}
-          likedDrinks={likedDrinks}
-          filter={filter}
-          onAddDrink={addDrink}
-          onUpdateDrink={updateDrink}
-          onToggleLike={toggleLike}
-          onDelete={deleteDrink}
-          editDrink={editDrink}
-          onEditDrink={setEditDrink}
-        />
-      ) : (
-        <Stats drinks={drinks} />
-      )}
+        <Routes>
+          <Route path="/" element={<Home drinks={drinks} />} />
 
-      <Footer />
-    </div>
+          <Route path="/drinks" element={
+            <Drinks
+              drinks={drinks}
+              likedDrinks={likedDrinks}
+              filter={filter}
+              onAddDrink={addDrink}
+              onUpdateDrink={updateDrink}
+              onToggleLike={toggleLike}
+              onDelete={deleteDrink}
+              editDrink={editDrink}
+              onEditDrink={setEditDrink}
+            />
+          } />
+
+          <Route path="/stats"  element={<Stats drinks={drinks} />} />
+          <Route path="/about"  element={<About />} />
+        </Routes>
+
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
 
