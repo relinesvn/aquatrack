@@ -14,14 +14,7 @@ function App() {
 }
 
 export default App;
-```
 
----
-
-## Крок 3 — Структура папок
-
-Створіть папку `src/components/`:
-```
 src/
   components/
     Header.jsx
