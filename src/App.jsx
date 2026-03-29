@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Main from './components/Main';
@@ -12,9 +12,36 @@ const initialDrinks = [
 ];
 
 function App() {
-  const [drinks, setDrinks]           = useState(initialDrinks);
-  const [likedDrinks, setLikedDrinks] = useState(new Set());
-  const [filter, setFilter]           = useState('all');
+  // Ініціалізатор — зчитує з localStorage при першому рендері
+  const [drinks, setDrinks] = useState(() => {
+    try {
+      const saved = localStorage.getItem('aquatrack_drinks');
+      return saved ? JSON.parse(saved) : initialDrinks;
+    } catch {
+      return initialDrinks;
+    }
+  });
+
+  const [likedDrinks, setLikedDrinks] = useState(() => {
+    try {
+      const saved = localStorage.getItem('aquatrack_liked');
+      return saved ? new Set(JSON.parse(saved)) : new Set();
+    } catch {
+      return new Set();
+    }
+  });
+
+  const [filter, setFilter] = useState('all');
+
+  // Синхронізація drinks → localStorage
+  useEffect(() => {
+    localStorage.setItem('aquatrack_drinks', JSON.stringify(drinks));
+  }, [drinks]);
+
+  // Синхронізація likedDrinks → localStorage
+  useEffect(() => {
+    localStorage.setItem('aquatrack_liked', JSON.stringify([...likedDrinks]));
+  }, [likedDrinks]);
 
   const addDrink = (drink) => {
     setDrinks(prev => [...prev, drink]);

@@ -395,3 +395,29 @@ body {
   border: 1.5px solid var(--color-border);
 }
 
+/* === Footer з годинником === */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.footer__clock {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.85rem;
+}
+
+.footer__date {
+  opacity: 0.7;
+}
+
+.footer__time {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.95);
+}
