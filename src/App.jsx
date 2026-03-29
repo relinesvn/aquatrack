@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Main from './components/Main';
+import Stats from './components/Stats';
 import './App.css';
 
 const initialDrinks = [
@@ -12,39 +13,39 @@ const initialDrinks = [
 ];
 
 function App() {
-  // Ініціалізатор — зчитує з localStorage при першому рендері
   const [drinks, setDrinks] = useState(() => {
     try {
       const saved = localStorage.getItem('aquatrack_drinks');
       return saved ? JSON.parse(saved) : initialDrinks;
-    } catch {
-      return initialDrinks;
-    }
+    } catch { return initialDrinks; }
   });
 
   const [likedDrinks, setLikedDrinks] = useState(() => {
     try {
       const saved = localStorage.getItem('aquatrack_liked');
       return saved ? new Set(JSON.parse(saved)) : new Set();
-    } catch {
-      return new Set();
-    }
+    } catch { return new Set(); }
   });
 
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter]   = useState('all');
+  const [page, setPage]       = useState('drinks'); // 'drinks' | 'stats'
+  const [editDrink, setEditDrink] = useState(null); // напій для редагування
 
-  // Синхронізація drinks → localStorage
   useEffect(() => {
     localStorage.setItem('aquatrack_drinks', JSON.stringify(drinks));
   }, [drinks]);
 
-  // Синхронізація likedDrinks → localStorage
   useEffect(() => {
     localStorage.setItem('aquatrack_liked', JSON.stringify([...likedDrinks]));
   }, [likedDrinks]);
 
   const addDrink = (drink) => {
     setDrinks(prev => [...prev, drink]);
+  };
+
+  const updateDrink = (updated) => {
+    setDrinks(prev => prev.map(d => d.id === updated.id ? updated : d));
+    setEditDrink(null);
   };
 
   const toggleLike = (id) => {
@@ -65,15 +66,29 @@ function App() {
 
   return (
     <div className="app">
-      <Header filter={filter} onFilterToggle={toggleFilter} />
-      <Main
-        drinks={drinks}
-        likedDrinks={likedDrinks}
+      <Header
         filter={filter}
-        onAddDrink={addDrink}
-        onToggleLike={toggleLike}
-        onDelete={deleteDrink}
+        onFilterToggle={toggleFilter}
+        page={page}
+        onPageChange={setPage}
       />
+
+      {page === 'drinks' ? (
+        <Main
+          drinks={drinks}
+          likedDrinks={likedDrinks}
+          filter={filter}
+          onAddDrink={addDrink}
+          onUpdateDrink={updateDrink}
+          onToggleLike={toggleLike}
+          onDelete={deleteDrink}
+          editDrink={editDrink}
+          onEditDrink={setEditDrink}
+        />
+      ) : (
+        <Stats drinks={drinks} />
+      )}
+
       <Footer />
     </div>
   );

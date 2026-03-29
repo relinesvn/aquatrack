@@ -1,6 +1,6 @@
 import DrinkItem from './DrinkItem';
 
-function DrinkList({ drinks, likedDrinks, filter, onToggleLike, onDelete }) {
+function DrinkList({ drinks, likedDrinks, filter, onToggleLike, onDelete, onEditDrink }) {
   const visible = filter === 'liked'
     ? drinks.filter(d => likedDrinks.has(d.id))
     : drinks;
@@ -26,6 +26,7 @@ function DrinkList({ drinks, likedDrinks, filter, onToggleLike, onDelete }) {
             liked={likedDrinks.has(drink.id)}
             onToggleLike={onToggleLike}
             onDelete={onDelete}
+            onEdit={onEditDrink}
           />
         ))
       )}

@@ -1,6 +1,6 @@
 import FavoriteButton from './FavoriteButton';
 
-function DrinkItem({ drink, liked, onToggleLike, onDelete }) {
+function DrinkItem({ drink, liked, onToggleLike, onDelete, onEdit }) {
   const { id, name, category, volume, sugar, calories, photo } = drink;
 
   return (
@@ -13,6 +13,13 @@ function DrinkItem({ drink, liked, onToggleLike, onDelete }) {
         <div className="drink-item__actions">
           <span className="drink-item__category">{category}</span>
           <FavoriteButton liked={liked} onToggle={() => onToggleLike(id)} />
+          <button
+            className="edit-btn"
+            onClick={() => onEdit(drink)}
+            title="Редагувати"
+          >
+            ✏️
+          </button>
           <button
             className="delete-btn"
             onClick={() => onDelete(id)}
