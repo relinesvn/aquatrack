@@ -328,3 +328,70 @@ body {
   opacity: 1;
   transform: scale(1.15);
 }
+
+/* === Form field wrapper === */
+.drink-adder__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.drink-adder__error {
+  font-size: 0.8rem;
+  color: var(--color-danger);
+  padding-left: 4px;
+}
+
+.input--error {
+  border-color: var(--color-danger) !important;
+}
+
+/* === Select === */
+.drink-adder__select {
+  cursor: pointer;
+  background: white;
+}
+
+/* === Row of 3 inputs === */
+.drink-adder__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+/* === Photo upload === */
+.drink-adder__photo-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.drink-adder__photo-label {
+  display: inline-block;
+  padding: 8px 14px;
+  background: var(--color-accent);
+  border: 1.5px dashed var(--color-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.drink-adder__photo-label:hover {
+  background: #d0e8fb;
+}
+
+.drink-adder__photo-input {
+  display: none;
+}
+
+.drink-adder__preview {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1.5px solid var(--color-border);
+}
+
