@@ -204,3 +204,20 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* === DrinkList empty state === */
+.drink-list__empty {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 24px 0;
+  font-size: 0.95rem;
+}
+
+/* === DrinkItem photo === */
+.drink-item__photo {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}

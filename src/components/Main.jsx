@@ -1,12 +1,12 @@
 import DrinkAdderMenu from './DrinkAdderMenu';
 import DrinkList from './DrinkList';
 
-function Main() {
+function Main({ drinks }) {
   return (
     <main className="main">
       <div className="main__inner">
         <DrinkAdderMenu />
-        <DrinkList />
+        <DrinkList drinks={drinks} />
       </div>
     </main>
   );
