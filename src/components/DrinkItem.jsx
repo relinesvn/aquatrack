@@ -1,3 +1,5 @@
+import FavoriteButton from './FavoriteButton';
+
 function DrinkItem({ drink }) {
   const { name, category, volume, sugar, calories, photo } = drink;
 
@@ -8,7 +10,10 @@ function DrinkItem({ drink }) {
       )}
       <div className="drink-item__header">
         <span className="drink-item__name">{name}</span>
-        <span className="drink-item__category">{category}</span>
+        <div className="drink-item__actions">
+          <span className="drink-item__category">{category}</span>
+          <FavoriteButton />
+        </div>
       </div>
       <div className="drink-item__stats">
         <span>💧 {volume} мл</span>
