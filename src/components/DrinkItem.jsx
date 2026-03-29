@@ -1,10 +1,10 @@
 import FavoriteButton from './FavoriteButton';
 
-function DrinkItem({ drink }) {
-  const { name, category, volume, sugar, calories, photo } = drink;
+function DrinkItem({ drink, liked, onToggleLike, onDelete }) {
+  const { id, name, category, volume, sugar, calories, photo } = drink;
 
   return (
-    <div className="drink-item">
+    <div className={`drink-item ${liked ? 'drink-item--liked' : ''}`}>
       {photo && (
         <img className="drink-item__photo" src={photo} alt={name} />
       )}
@@ -12,7 +12,14 @@ function DrinkItem({ drink }) {
         <span className="drink-item__name">{name}</span>
         <div className="drink-item__actions">
           <span className="drink-item__category">{category}</span>
-          <FavoriteButton />
+          <FavoriteButton liked={liked} onToggle={() => onToggleLike(id)} />
+          <button
+            className="delete-btn"
+            onClick={() => onDelete(id)}
+            title="Видалити"
+          >
+            🗑️
+          </button>
         </div>
       </div>
       <div className="drink-item__stats">

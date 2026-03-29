@@ -1,17 +1,32 @@
 import DrinkItem from './DrinkItem';
 
-function DrinkList({ drinks }) {
+function DrinkList({ drinks, likedDrinks, filter, onToggleLike, onDelete }) {
+  const visible = filter === 'liked'
+    ? drinks.filter(d => likedDrinks.has(d.id))
+    : drinks;
+
   return (
     <div className="drink-list">
       <h2 className="drink-list__title">
-        Список напоїв ({drinks.length})
+        {filter === 'liked' ? '❤️ Улюблені напої' : 'Список напоїв'}
+        <span className="drink-list__count">{visible.length}</span>
       </h2>
 
-      {drinks.length === 0 ? (
-        <p className="drink-list__empty">Ще немає жодного напою 💧</p>
+      {visible.length === 0 ? (
+        <p className="drink-list__empty">
+          {filter === 'liked'
+            ? 'Немає улюблених напоїв. Натисніть ❤️ на картці!'
+            : 'Ще немає жодного напою 💧'}
+        </p>
       ) : (
-        drinks.map((drink) => (
-          <DrinkItem key={drink.id} drink={drink} />
+        visible.map(drink => (
+          <DrinkItem
+            key={drink.id}
+            drink={drink}
+            liked={likedDrinks.has(drink.id)}
+            onToggleLike={onToggleLike}
+            onDelete={onDelete}
+          />
         ))
       )}
     </div>

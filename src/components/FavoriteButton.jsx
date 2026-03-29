@@ -1,12 +1,8 @@
-import { useState } from 'react';
-
-function FavoriteButton() {
-  const [liked, setLiked] = useState(false);
-
+function FavoriteButton({ liked, onToggle }) {
   return (
     <button
       className={`favorite-btn ${liked ? 'liked' : ''}`}
-      onClick={() => setLiked(prev => !prev)}
+      onClick={onToggle}
       title={liked ? 'Прибрати з улюблених' : 'Додати до улюблених'}
     >
       {liked ? '❤️' : '🤍'}

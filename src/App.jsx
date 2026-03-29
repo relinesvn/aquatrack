@@ -12,12 +12,36 @@ const initialDrinks = [
 ];
 
 function App() {
-  const [drinks, setDrinks] = useState(initialDrinks);
+  const [drinks, setDrinks]         = useState(initialDrinks);
+  const [likedDrinks, setLikedDrinks] = useState(new Set());
+  const [filter, setFilter]         = useState('all'); // 'all' | 'liked'
+
+  const toggleLike = (id) => {
+    setLikedDrinks(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const deleteDrink = (id) => {
+    setDrinks(prev => prev.filter(d => d.id !== id));
+  };
+
+  const toggleFilter = () => {
+    setFilter(prev => prev === 'all' ? 'liked' : 'all');
+  };
 
   return (
     <div className="app">
-      <Header />
-      <Main drinks={drinks} />
+      <Header filter={filter} onFilterToggle={toggleFilter} />
+      <Main
+        drinks={drinks}
+        likedDrinks={likedDrinks}
+        filter={filter}
+        onToggleLike={toggleLike}
+        onDelete={deleteDrink}
+      />
       <Footer />
     </div>
   );
